@@ -1,0 +1,18 @@
+body {
+  background-color:white;
+  cursor: url('../img/Icons/cursor.png'), auto;
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  max-width: 2500px;
+  max-height: 1500px;
+  background-color:white;
+}
+
+#menu {
+  position: fixed;
+  display: none;
+  right: 0;
+}
