@@ -25,6 +25,10 @@ var View = {
     } else if(locationNow == "game") {
         View.drawMap();
         View.drawGameMenu();
+    } else if(locationNow == "shop") {
+        View.drawShop();
+    } else if(locationNow == "stock") {
+        View.drawStock();
     }
   },
 
@@ -57,36 +61,37 @@ var View = {
     //house
     ctx.drawImage(DownloadApp.imagesMap[2], (1900+scrollX)*scale, (10+scrollY)*scale, 850*scale, 600*scale);
     //testing first garden bed
-    ctx.drawImage(DownloadApp.imagesMap[3], (100+scrollX)*scale, (100+scrollY)*scale, 650*scale, 330*scale);
+    var bed_0 = Map.arrayGardenBeds[0];
+    ctx.drawImage(DownloadApp.imagesMap[3], (bed_0.x+scrollX)*scale, (bed_0.y+scrollY)*scale, bed_0.sizeX*scale, bed_0.sizeY*scale);
     //first line
-    ctx.drawImage(DownloadApp.imagesMap[4], (150+scrollX)*scale, (150+scrollY)*scale, 100*scale, 100*scale);
-    ctx.drawImage(DownloadApp.imagesMap[4], (300+scrollX)*scale, (150+scrollY)*scale, 100*scale, 100*scale);
-    ctx.drawImage(DownloadApp.imagesMap[4], (450+scrollX)*scale, (150+scrollY)*scale, 100*scale, 100*scale);
-    ctx.drawImage(DownloadApp.imagesMap[4], (600+scrollX)*scale, (150+scrollY)*scale, 100*scale, 100*scale);
-    //second line
-    ctx.drawImage(DownloadApp.imagesMap[5], (150+scrollX)*scale, (290+scrollY)*scale, 100*scale, 100*scale);
-    ctx.drawImage(DownloadApp.imagesMap[5], (300+scrollX)*scale, (290+scrollY)*scale, 100*scale, 100*scale);
-    ctx.drawImage(DownloadApp.imagesMap[5], (450+scrollX)*scale, (290+scrollY)*scale, 100*scale, 100*scale);
-    ctx.drawImage(DownloadApp.imagesMap[5], (600+scrollX)*scale, (290+scrollY)*scale, 100*scale, 100*scale);
+    var places_0 = bed_0.places;
+    for(var i = 0; i < places_0.length; i++) {
+      ctx.drawImage(DownloadApp.imagesMap[4], (places_0[i].x+scrollX)*scale, (places_0[i].y+scrollY)*scale, plantSizeX*scale, plantSizeY*scale);
+    }
     //testing second garden bed
-    ctx.drawImage(DownloadApp.imagesMap[3], (100+scrollX)*scale, (600+scrollY)*scale, 650*scale, 330*scale);
+    var bed_1 = Map.arrayGardenBeds[1];
+    ctx.drawImage(DownloadApp.imagesMap[3], (bed_1.x+scrollX)*scale, (bed_1.y+scrollY)*scale, bed_1.sizeX*scale, bed_1.sizeY*scale);
     //first line
-    ctx.drawImage(DownloadApp.imagesMap[4], (150+scrollX)*scale, (650+scrollY)*scale, 100*scale, 100*scale);
-    ctx.drawImage(DownloadApp.imagesMap[4], (300+scrollX)*scale, (650+scrollY)*scale, 100*scale, 100*scale);
-    ctx.drawImage(DownloadApp.imagesMap[4], (450+scrollX)*scale, (650+scrollY)*scale, 100*scale, 100*scale);
-    ctx.drawImage(DownloadApp.imagesMap[4], (600+scrollX)*scale, (650+scrollY)*scale, 100*scale, 100*scale);
-    //second line
-    ctx.drawImage(DownloadApp.imagesMap[5], (150+scrollX)*scale, (790+scrollY)*scale, 100*scale, 100*scale);
-    ctx.drawImage(DownloadApp.imagesMap[5], (300+scrollX)*scale, (790+scrollY)*scale, 100*scale, 100*scale);
-    ctx.drawImage(DownloadApp.imagesMap[5], (450+scrollX)*scale, (790+scrollY)*scale, 100*scale, 100*scale);
-    ctx.drawImage(DownloadApp.imagesMap[5], (600+scrollX)*scale, (790+scrollY)*scale, 100*scale, 100*scale);
+    var places_1 = bed_1.places;
+    for(var i = 0; i < places_1.length; i++) {
+      ctx.drawImage(DownloadApp.imagesMap[5], (places_1[i].x+scrollX)*scale, (places_1[i].y+scrollY)*scale, plantSizeX*scale, plantSizeY*scale);
+    }
   },
 
   drawGameMenu: function() {
-    ctx.drawImage(DownloadApp.imagesGameMenu[1], GAME_MENU_ICON_BAG_X, GAME_MENU_ICON_BAG_Y, GAME_MENU_ICON_MENU_SIZE_X, GAME_MENU_ICON_MENU_SIZE_Y);
-    ctx.drawImage(DownloadApp.imagesGameMenu[0], GAME_MENU_ICON_MENU_X, GAME_MENU_ICON_MENU_Y, GAME_MENU_ICON_MENU_SIZE_X, GAME_MENU_ICON_MENU_SIZE_Y);
-    ctx.drawImage(DownloadApp.imagesGameMenu[2], GAME_MENU_ICON_STOCK_X, GAME_MENU_ICON_STOCK_Y, GAME_MENU_ICON_MENU_SIZE_X, GAME_MENU_ICON_MENU_SIZE_Y);
-    ctx.drawImage(DownloadApp.imagesGameMenu[3], GAME_MENU_ICON_SHOP_X, GAME_MENU_ICON_SHOP_Y, GAME_MENU_ICON_MENU_SIZE_X, GAME_MENU_ICON_MENU_SIZE_Y);
+    var menu = GameMenu.menuIcons;
+    for(var i = 0; i < menu.length; i++) {
+      ctx.drawImage(menu[i].img, menu[i].x, menu[i].y, menu[i].sizeX, menu[i].sizeY);
+    }
+  },
+
+  drawShop: function() {
+    ctx.drawImage(DownloadApp.imagesShop[5], Shop.x, Shop.y, Shop.sizeX, Shop.sizeY);
+  },
+
+  drawStock: function() {
+    ctx.fillStyle = "lightgreen";
+    ctx.fillRect(Stock.x, Stock.y, Stock.sizeX, Stock.sizeY);
   }
 
 }

@@ -8,7 +8,9 @@ var Global = {
     Global.defineDownloadAppText();
     Global.defineStatusVariables();
     Global.defineMainMenu();
-    Global.defineGameMenu();
+    Global.defineGameMenu()
+    Global.defineShop();
+    Global.definePlants();
   },
 
   defineScreenSize: function(canvas) {
@@ -77,11 +79,11 @@ var Global = {
     window.GAME_MENU_ICON_MENU_SIZE_Y = window.GAME_MENU_ICON_BAG_SIZE_Y =
     window.GAME_MENU_ICON_SHOP_SIZE_Y = window.GAME_MENU_ICON_STOCK_SIZE_Y = sizeIconX / 2;
     //x
-    window.GAME_MENU_ICON_BAG_X = window.GAME_MENU_ICON_STOCK_X = 0;
-    window.GAME_MENU_ICON_MENU_X = window.GAME_MENU_ICON_SHOP_X = WINDOW_WIDTH - sizeIconX;
+    window.GAME_MENU_ICON_BAG_X = window.GAME_MENU_ICON_SHOP_X = 0;
+    window.GAME_MENU_ICON_MENU_X = window.GAME_MENU_ICON_STOCK_X = WINDOW_WIDTH - sizeIconX;
     //y
-    window.GAME_MENU_ICON_BAG_Y = window.GAME_MENU_ICON_MENU_Y = 0;
-    window.GAME_MENU_ICON_STOCK_Y = window.GAME_MENU_ICON_SHOP_Y = WINDOW_HEIGHT - sizeIconY;
+    window.GAME_MENU_ICON_SHOP_Y = window.GAME_MENU_ICON_MENU_Y = 0;
+    window.GAME_MENU_ICON_BAG_Y = window.GAME_MENU_ICON_STOCK_Y = WINDOW_HEIGHT - sizeIconY;
     //tools
     window.GAME_MENU_TOOL_SIZE_X = sizeIconX / 1.2;
     window.GAME_MENU_TOOL_SIZE_Y = sizeIconX / 1.2;
@@ -94,6 +96,15 @@ var Global = {
     window.GAME_MENU_ARROW_LEFT_Y = window.GAME_MENU_ICON_SHOP_Y + distanceIcons;
     window.GAME_MENU_ARROW_RIGHT_X = WINDOW_WIDTH - (WINDOW_WIDTH / 3) - GAME_MENU_ARROW_SIZE_X + (sizeIconX / 2)  - (sizeIconX / 6.1);
     window.GAME_MENU_ARROW_RIGHT_Y = window.GAME_MENU_ICON_SHOP_Y + distanceIcons;
+  },
+
+  defineShop: function() {
+
+  },
+
+  definePlants: function() {
+    window.plantSizeX = 100;
+    window.plantSizeY = 100;
   }
 
 }

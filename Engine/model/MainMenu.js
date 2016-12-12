@@ -2,18 +2,18 @@
 
 var MainMenu = {
 
-  //This array needs to track clicks
+  //This array needs to track touch
   arrayMenu: [],
 
   make: function() {
     //zero out an array
     MainMenu.arrayMenu = [];
 
-    function createMenuItem(img, x, y, ObjName) {
+    function createMenuItem(img, x, y, objName) {
       var sizeX = MAIN_MENU_ITEM_SIZE_X;
       var sizeY = MAIN_MENU_ITEM_SIZE_Y;
       //ctx.drawImage(img, x, y, sizeX, sizeY);
-      var objectMenu = new MainMenu.createObject(ObjName, x, y, sizeX, sizeY, img);
+      var objectMenu = new MainMenu.createObject(objName, x, y, sizeX, sizeY, img);
       //Add in array
       MainMenu.arrayMenu.push(objectMenu);
       if(MainMenu.arrayMenu.length == 4) {
@@ -29,28 +29,28 @@ var MainMenu = {
   },
 
   //Prototype main menu items
-  createObject: function(ObjName, x, y, sizeX, sizeY, img) {
-   this.ObjName = ObjName;
-   this.x = x;
-   this.y = y;
-   this.sizeX = sizeX;
-   this.sizeY = sizeY;
-   this.img = img;
- },
+  createObject: function(objName, x, y, sizeX, sizeY, img) {
+    this.objName = objName;
+    this.x = x;
+    this.y = y;
+    this.sizeX = sizeX;
+    this.sizeY = sizeY;
+    this.img = img;
+  },
 
-  clickOnTheItem: function(item) {
+  touchOnTheItem: function(item) {
     switch(item) {
       case "on trash garden":
-        OnTrashGarden.clickOnTheTtem();
+        OnTrashGarden.touchOnTheTtem();
         break;
       case "help":
-        Help.clickOnTheTtem();
+        Help.touchOnTheTtem();
         break;
       case "new game":
-        NewGame.clickOnTheTtem();
+        NewGame.touchOnTheTtem();
         break;
       case "exit":
-        Exit.clickOnTheTtem();
+        Exit.touchOnTheTtem();
         break;
      }
   }
@@ -61,7 +61,7 @@ var MainMenu = {
 
 //maim menu item - "On garden bed"
 var OnTrashGarden = {
-  clickOnTheTtem: function() {
+  touchOnTheTtem: function() {
     if(initialization === false) {
       Model.response("start game");
     } else {
@@ -72,14 +72,14 @@ var OnTrashGarden = {
 
 //maim menu item - "Help"
 var Help = {
-  clickOnTheTtem: function() {
+  touchOnTheTtem: function() {
     alert("help!");
   }
 }
 
 //maim menu item - "New game"
 var NewGame = {
-  clickOnTheTtem: function() {
+  touchOnTheTtem: function() {
     var decision = confirm("Вы уверены что хотите начать новую игру?");
     if(decision == true) {
       Model.newGame();
@@ -89,7 +89,7 @@ var NewGame = {
 
 //maim menu item - "Exit"
 var Exit = {
-  clickOnTheTtem: function() {
+  touchOnTheTtem: function() {
     alert('exit!');
   }
 }

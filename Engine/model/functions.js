@@ -1,6 +1,6 @@
 //with the functions of the file
 
-//FUNCTIONS FOR "Click.js"
+//FUNCTIONS FOR "Click.js and Touch.js"
 
 //findPosX(for canvas)
 function findPosX(obj) {
@@ -35,6 +35,23 @@ function findPosY(obj) {
     }
     return curtop;
 }
+
+//functions for game menu
+function Tool(img, objName) {
+  this.img = img;
+  this.objName = objName;
+}
+
+function CreateObject(x, y, sizeX, sizeY, img, objName) {
+  this.x = x;
+  this.y = y;
+  this.sizeX = sizeX;
+  this.sizeY = sizeY;
+  this.img = img;
+  this.objName = objName;
+}
+
+//Functions for zoom and scrolling
 
 /*Пишем функцию, которая определяет расстояние меж пальцами*/
 function distance (p1, p2) {

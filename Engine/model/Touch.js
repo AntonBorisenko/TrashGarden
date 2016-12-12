@@ -116,7 +116,7 @@ var Touch = {
 
   ////////JUST TOUCH IN game
   justTouch: function(x, y) {
-    //determine the place where there was a click
+    //determine the place where there was a touck
     switch(locationNow) {
       case "main menu":
         Touch.touchInMainMenu(x, y);
@@ -131,15 +131,19 @@ var Touch = {
     var menu = MainMenu.arrayMenu;
     for(var i = 0; i < menu.length; i++) {
       if((x > menu[i].x && x < (menu[i].x + menu[i].sizeX) ) && (y > menu[i].y && y < (menu[i].y + menu[i].sizeY)) )  {
-        Model.mainMenuClick(menu[i].ObjName);
+        Model.touchInMainMenu(menu[i].objName);
         return;
       }
     }
   },
 
   touchInGame: function(x, y) {
-    if((x > GAME_MENU_ICON_MENU_X && x < (GAME_MENU_ICON_MENU_X + GAME_MENU_ICON_SIZE_X) ) && (y > GAME_MENU_ICON_MENU_Y && y < (GAME_MENU_ICON_MENU_Y + GAME_MENU_ICON_SIZE_Y)) )  {
-      Model.gameMenuClick();
+    var menu = GameMenu.menuIcons;
+    for(var i = 0; i < menu.length; i++) {
+      if((x > menu[i].x && x < (menu[i].x + menu[i].sizeX) ) && (y > menu[i].y && y < (menu[i].y + menu[i].sizeY)) )  {
+        Model.touchInGameMenu(menu[i].objName);
+        return;
+      }
     }
   }
 

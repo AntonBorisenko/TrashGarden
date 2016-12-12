@@ -19,8 +19,13 @@ var Model = {
       break;
 
       case "start game":
-        locationNow = "game";
         initialization = true;
+        GameMenu.make();
+        Map.make();
+      break;
+
+      case "game menu complete":
+        locationNow = "game";
         window.canvas.width = document.documentElement.clientWidth;
         window.canvas.height = document.documentElement.clientHeight;
         Model.createMapEvents();
@@ -55,7 +60,7 @@ var Model = {
   newGame: function() {
     //Здесь сбрасываем всё, обнуляем
     //..........//
-    OnTrashGarden.clickOnTheTtem();
+    OnTrashGarden.touchOnTheTtem();
   },
 
   createTouchEvent: function() {
@@ -119,23 +124,12 @@ var Model = {
 
   },
 
-  mainMenuClick: function(item) {
-    MainMenu.clickOnTheItem(item);
+  touchInMainMenu: function(item) {
+    MainMenu.touchOnTheItem(item);
   },
 
-  gameMenuClick: function() {
-    //пока только выход из игры
-    locationNow = "main menu";
-    document.body.style.overflow = "hidden"; //Disable scroll
-    var width = document.documentElement.clientWidth;
-    var height = document.documentElement.clientHeight;
-    if(height > width) {
-        window.canvas.width = height;
-        window.canvas.height = width;
-    } else {
-      window.canvas.width = width;
-      window.canvas.height = height;
-    }
+  touchInGameMenu: function(icon) {
+    GameMenu.touchOnTheIcon(icon);
   }
 
 }

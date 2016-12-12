@@ -5,6 +5,7 @@ var DownloadApp = {
   imagesMainMenu: [],
   imagesMap: [],
   imagesGameMenu: [],
+  imagesShop: [],
 
   //Downloading images
   downloading: function() {
@@ -38,6 +39,8 @@ var DownloadApp = {
           loadImages(imagesForMap, DownloadApp.imagesMap, number);
       }  else if(number == 3) {
           loadImages(imgGameMenuForDownload, DownloadApp.imagesGameMenu, number);
+      } else if(number == 4) {
+          loadImages(imgForShop, DownloadApp.imagesShop, number);
       } else {
         //responce on the task
         Model.response("download complete");
@@ -61,3 +64,7 @@ var imagesForMap = ["img/Map/fone.jpg", "img/Map/grassTexture.jpg", "img/Map/hou
 var imgGameMenuForDownload = ["img/Game menu/exit_in_menu.png", "img/Game menu/bag.png", "img/Game menu/stock.png",
                               "img/Game menu/shop.png", "img/Game menu/arrow_left.png", "img/Game menu/arrow_right.png",
                               "img/Game menu/bailer.png", "img/Game menu/sprayer.png", "img/Game menu/shovel.png"];
+
+var imgForShop = ["img/Shop/all_for_billets.png", "img/Shop/all_for_garden.png",
+                  "img/Shop/fertilizers.png", "img/Shop/seed.png",
+                  "img/Shop/exit_in_game.jpg", "img/Shop/fon.png" ];
