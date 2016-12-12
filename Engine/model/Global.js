@@ -21,8 +21,17 @@ var Global = {
   defineScrolling: function(canvas) {
     window.scrollX = 0;
     window.scrollY = 0;
-    window.scrollStep = 20;
+    window.scrollStep = 10;
     window.scale = 1;
+    //the size of the card
+    window.mapWidth = 3000;
+    window.mapHeight = 2000;
+    //scrollLimits
+    window.scrollLeftLimit = 0;
+    window.scrollTopLimit = 0;
+    //for mousemove and touchmove(too scrolling)
+    window.lastScrollX = NaN;
+    window.lastScrollY = NaN;
   },
 
   defineDownloadAppText: function() {
@@ -34,6 +43,7 @@ var Global = {
 
   defineStatusVariables: function() {
     window.locationNow = "download";                  //location
+    window.initialization = false;
   },
 
   defineMainMenu: function() {

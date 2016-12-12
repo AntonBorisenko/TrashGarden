@@ -40,15 +40,22 @@ var View = {
   },
 
   drawMap: function() {
-    //fon
+    ////fone
     // var pattern = ctx.createPattern(DownloadApp.imagesMap[1], "repeat");
     // ctx.fillStyle = pattern;
     // ctx.rect(0 + scrollX, 0 + scrollY, canvas.width, canvas.height);
     // ctx.fill();
-    ctx.fillStyle = "lightgreen";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // ctx.fillStyle = "lightgreen";
+    // ctx.fillRect(0, 0, canvas.width, canvas.height);
+    //fone
+    ctx.drawImage(DownloadApp.imagesMap[1], (0+scrollX)*scale, (0+scrollY)*scale, 1000*scale, 1000*scale);
+    ctx.drawImage(DownloadApp.imagesMap[1], (1000+scrollX)*scale, (0+scrollY)*scale, 1000*scale, 1000*scale);
+    ctx.drawImage(DownloadApp.imagesMap[1], (2000+scrollX)*scale, (0+scrollY)*scale, 1000*scale, 1000*scale);
+    ctx.drawImage(DownloadApp.imagesMap[1], (0+scrollX)*scale, (1000+scrollY)*scale, 1000*scale, 1000*scale);
+    ctx.drawImage(DownloadApp.imagesMap[1], (1000+scrollX)*scale, (1000+scrollY)*scale, 1000*scale, 1000*scale);
+    ctx.drawImage(DownloadApp.imagesMap[1], (2000+scrollX)*scale, (1000+scrollY)*scale, 1000*scale, 1000*scale);
     //house
-    ctx.drawImage(DownloadApp.imagesMap[2], (1600+scrollX)*scale, (10+scrollY)*scale, 850*scale, 600*scale);
+    ctx.drawImage(DownloadApp.imagesMap[2], (1900+scrollX)*scale, (10+scrollY)*scale, 850*scale, 600*scale);
     //testing first garden bed
     ctx.drawImage(DownloadApp.imagesMap[3], (100+scrollX)*scale, (100+scrollY)*scale, 650*scale, 330*scale);
     //first line

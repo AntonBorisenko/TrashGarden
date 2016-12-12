@@ -62,7 +62,11 @@ var MainMenu = {
 //maim menu item - "On garden bed"
 var OnTrashGarden = {
   clickOnTheTtem: function() {
-    Model.response("start game");
+    if(initialization === false) {
+      Model.response("start game");
+    } else {
+      Model.changeLocation("game");
+    }
   }
 }
 
@@ -78,8 +82,7 @@ var NewGame = {
   clickOnTheTtem: function() {
     var decision = confirm("Вы уверены что хотите начать новую игру?");
     if(decision == true) {
-      //Model.resetAll();
-      OnTrashGarden.clickOnTheTtem();
+      Model.newGame();
     }
   }
 }
