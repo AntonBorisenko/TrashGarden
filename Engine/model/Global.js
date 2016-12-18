@@ -3,6 +3,7 @@
 var Global = {
 
   initialization: function(canvas) {
+    Global.defineArraysForImages();
     Global.defineScreenSize(canvas);
     Global.defineScrolling(canvas);
     Global.defineDownloadAppText();
@@ -10,7 +11,17 @@ var Global = {
     Global.defineMainMenu();
     Global.defineGameMenu()
     Global.defineShop();
+    Global.defineBag();
     Global.definePlants();
+  },
+
+  defineArraysForImages: function() {
+    window.imagesMainMenu = [];
+    window.imagesMap = [];
+    window.imagesGameMenu = [];
+    window.imagesShop = [];
+    window.imagesBag = [];
+    window.imagesPlantsPapper = [];
   },
 
   defineScreenSize: function(canvas) {
@@ -21,9 +32,9 @@ var Global = {
   },
 
   defineScrolling: function(canvas) {
+    window.smoothScroll = false; //for interrupt scrolling
     window.scrollX = 0;
     window.scrollY = 0;
-    window.scrollStep = 10;
     window.scale = 1;
     //the size of the card
     window.mapWidth = 3000;
@@ -31,7 +42,7 @@ var Global = {
     //scrollLimits
     window.scrollLeftLimit = 0;
     window.scrollTopLimit = 0;
-    //for mousemove and touchmove(too scrolling)
+    //for mousemove and touchmove(too scrolling) for browser
     window.lastScrollX = NaN;
     window.lastScrollY = NaN;
   },
@@ -46,6 +57,8 @@ var Global = {
   defineStatusVariables: function() {
     window.locationNow = "download";                  //location
     window.initialization = false;
+    window.bag = false;
+    window.tool = 0;
   },
 
   defineMainMenu: function() {
@@ -84,22 +97,38 @@ var Global = {
     //y
     window.GAME_MENU_ICON_SHOP_Y = window.GAME_MENU_ICON_MENU_Y = 0;
     window.GAME_MENU_ICON_BAG_Y = window.GAME_MENU_ICON_STOCK_Y = WINDOW_HEIGHT - sizeIconY;
-    //tools
-    window.GAME_MENU_TOOL_SIZE_X = sizeIconX / 1.2;
-    window.GAME_MENU_TOOL_SIZE_Y = sizeIconX / 1.2;
-    window.GAME_MENU_TOOL_X = (WINDOW_WIDTH / 2) - (sizeIconX / 2);
-    window.GAME_MENU_TOOL_Y = window.GAME_MENU_ICON_SHOP_Y;
+    //tool
+    window.GAME_MENU_TOOL_SIZE_X = WINDOW_HEIGHT / 5.5;
+    window.GAME_MENU_TOOL_SIZE_Y = GAME_MENU_TOOL_SIZE_X;
+    window.GAME_MENU_TOOL_X = (WINDOW_WIDTH / 2) - (GAME_MENU_TOOL_SIZE_X / 2);
+    window.GAME_MENU_TOOL_Y = WINDOW_HEIGHT / 7 * 5.6;
     //arrows
-    window.GAME_MENU_ARROW_SIZE_X = WINDOW_HEIGHT /8;
-    window.GAME_MENU_ARROW_SIZE_Y = WINDOW_HEIGHT /5;
-    window.GAME_MENU_ARROW_LEFT_X = (WINDOW_WIDTH / 3) - (sizeIconX / 2);
-    window.GAME_MENU_ARROW_LEFT_Y = window.GAME_MENU_ICON_SHOP_Y + distanceIcons;
-    window.GAME_MENU_ARROW_RIGHT_X = WINDOW_WIDTH - (WINDOW_WIDTH / 3) - GAME_MENU_ARROW_SIZE_X + (sizeIconX / 2)  - (sizeIconX / 6.1);
-    window.GAME_MENU_ARROW_RIGHT_Y = window.GAME_MENU_ICON_SHOP_Y + distanceIcons;
+    window.GAME_MENU_ARROW_SIZE_X = WINDOW_HEIGHT / 10;
+    window.GAME_MENU_ARROW_SIZE_Y = WINDOW_HEIGHT / 6;
+    window.GAME_MENU_ARROW_LEFT_X = (WINDOW_WIDTH / 2) - (GAME_MENU_TOOL_SIZE_X / 2) - (GAME_MENU_ARROW_SIZE_X * 1.5);
+    window.GAME_MENU_ARROW_LEFT_Y = WINDOW_HEIGHT / 7 * 5.7;
+    window.GAME_MENU_ARROW_RIGHT_X = (WINDOW_WIDTH / 2) + (GAME_MENU_TOOL_SIZE_X / 2) + (GAME_MENU_ARROW_SIZE_X * 0.5);
+    window.GAME_MENU_ARROW_RIGHT_Y = GAME_MENU_ARROW_LEFT_Y;
   },
 
   defineShop: function() {
 
+  },
+
+  defineBag: function() {
+    //bag fone sizeY
+    window.bagX = WINDOW_WIDTH / 5.68;
+    window.bagY =  WINDOW_HEIGHT / 7 * 5;
+    window.bagSizeX = WINDOW_WIDTH / 3 * 1.95;
+    window.bagSizeY = WINDOW_HEIGHT / 3.2;
+    //Seeds in bag(in map)
+    var distance =  WINDOW_HEIGHT / 19;
+    window.BAG_SEED_POSITION_SIZE_X = WINDOW_HEIGHT / 8;
+    window.BAG_SEED_POSITION_SIZE_Y = BAG_SEED_POSITION_SIZE_X * 1.8;
+    window.BAG_SEED_POSITION_1_X = (WINDOW_WIDTH / 2) - (BAG_SEED_POSITION_SIZE_X * 1.5) - distance;
+    window.BAG_SEED_POSITION_2_X = BAG_SEED_POSITION_1_X + BAG_SEED_POSITION_SIZE_X + distance;
+    window.BAG_SEED_POSITION_3_X = BAG_SEED_POSITION_2_X + BAG_SEED_POSITION_SIZE_X + distance;
+    window.BAG_SEED_POSITION_1_Y = window.BAG_SEED_POSITION_2_Y = window.BAG_SEED_POSITION_3_Y = WINDOW_HEIGHT / 7 * 5.3;
   },
 
   definePlants: function() {

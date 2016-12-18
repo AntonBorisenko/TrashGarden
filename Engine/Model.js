@@ -21,6 +21,7 @@ var Model = {
       case "start game":
         initialization = true;
         GameMenu.make();
+        GameMenu.createBag();
         Map.make();
       break;
 
@@ -75,19 +76,43 @@ var Model = {
 
   //hanging listener
   createMapEvents: function() {
-    //scroll and zoom
     var touchMove = canvas.addEventListener('touchmove', function(event) {
       Touch.touchMove(event);
     }, false);
     canvas.addEventListener('touchend', function(event, touchMove) {
       Touch.touchEnd(event, touchMove);
     }, false);
+    //ЭТО ДЛЯ ТЕСТИРОВАНИЯ В БРАУЗЕРЕ - ПОТОМ УБРАТЬ
+    document.onkeydown = function checkKeycode(event) {
+      if(locationNow == "game") {
+        if(event.keyCode == 112) {
+          if(scale >= 1 && scale < 2) {
+            scale += 0.05;
+          } else if(scale >= 2) {
+            scale += 0.08;
+          } else {
+            scale += 0.02;
+          }
+        } else if(event.keyCode == 113) {
+          if(scale >= 1 && scale < 2) {
+            scale -= 0.05;
+          } else if(scale >= 2) {
+            scale -= 0.08;
+          } else {
+            scale -= 0.02;
+          }
+        }
+      }
+      if(scale < Touch.min_zoom) { scale = Touch.min_zoom }
+      if(scale > Touch.max_zoom) { scale = Touch.max_zoom }
+    }
   },
 
   //ЭТО ДЛЯ БРАУЗЕРА!!!В НОНЕЧНОЙ ВЕРСИИ ДЛЯ МОБИЛ - УДАЛИТЬ!
   scrollMap: function() {
     var status = false;
     var x, y, el, canvasX, canvasY;
+    //ТУТ НУЖНО ВСЁ ХОРОШЕНЬКО ОБДУМАТЬ И ГРАМОТНО НАПИСАТЬ, А ТО УЖЕ ЖЕСТЬ
     canvas.addEventListener('mousedown', function(event) {
       el = document.getElementById('canvas');
       canvasX = findPosX(el); //functions.js
@@ -95,6 +120,24 @@ var Model = {
       //We get the coordinates of the click in the canvas
       x = event.pageX - canvasX;
       y = event.pageY - canvasY;
+      if(bag) {
+        if(x > bagX && y > bagY && x < (bagX + bagSizeX) && y < (bagY + bagSizeY)) {
+          Click.bag(x, y);
+          return;
+        }
+        //Если нажимаем на инструмент или стрелки
+        } else {
+          if(x > GAME_MENU_TOOL_X && y > GAME_MENU_TOOL_Y && x < (GAME_MENU_TOOL_X + GAME_MENU_TOOL_SIZE_X) && y < (GAME_MENU_TOOL_Y + GAME_MENU_TOOL_SIZE_Y)) {
+            //будем делать drag and drop
+            return;
+          } else if((x > GAME_MENU_ARROW_LEFT_X && x < (GAME_MENU_ARROW_LEFT_X + GAME_MENU_ARROW_SIZE_X) ) && (y > GAME_MENU_ARROW_LEFT_Y && y < (GAME_MENU_ARROW_LEFT_Y + GAME_MENU_ARROW_SIZE_Y)) )  {
+            GameMenu.changeTool("left");
+            return;
+          } else if((x > GAME_MENU_ARROW_RIGHT_X && x < (GAME_MENU_ARROW_RIGHT_X + GAME_MENU_ARROW_SIZE_X) ) && (y > GAME_MENU_ARROW_RIGHT_Y && y < (GAME_MENU_ARROW_RIGHT_Y + GAME_MENU_ARROW_SIZE_Y)) )  {
+            GameMenu.changeTool("right");
+            return;
+          }
+        }
       status = true;
     }, false);
 

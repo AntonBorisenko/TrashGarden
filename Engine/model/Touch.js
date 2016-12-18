@@ -5,27 +5,34 @@ var Touch = {
   status: false,
   startX: undefined,
   startY: undefined,
+  timeStart: undefined,
   //for zoom
+  zoomStatus: 0,
   scaling: false,
   dist: 0,
   curr_scale: 1.0,
   max_zoom: 3.0,
   min_zoom: 0.5,
 
+  //ТУТ НУЖНО ВСЁ ХОРОШЕНЬКО ОБДУМАТЬ И ГРАМОТНО НАПИСАТЬ, А ТО УЖЕ ЖЕСТЬ
   touchStart: function(event) {
     event.preventDefault();
     var tt = event.targetTouches;
     //for scrolling
     if(tt.length === 1) {
       event.stopPropagation();
-      this.startX = event.changedTouches[0].pageX;
-      this.startY = event.changedTouches[0].pageY;
+      var x = this.startX = event.changedTouches[0].pageX;
+      var y = this.startY = event.changedTouches[0].pageY;
+      this.timeStart  = new Date();
       this.status = true;
+      //tuch on bag, tool or arrows
+      this.bagAndTool(x, y);
       //just touch(game menu, plants)
-      this.justTouch(this.startX, this.startY);
+      this.justTouch(x, y);
     }
     //for change scale
     if (tt.length >= 2) {
+      this.zoomStatus = 2;
       this.dist = distance(tt[0], tt[1]);
       this.scaling = true;
     } else {
@@ -47,7 +54,7 @@ var Touch = {
       if (this.scaling) {
         this.curr_scale = distance(tt[0], tt[1]) / this.dist; //functions.js
       }
-      this.zoom();
+      zoom();
     }
   },
 
@@ -55,62 +62,28 @@ var Touch = {
     var tt = event.targetTouches;
     if (tt.length < 2) {
       this.scaling = false;
+      if(this.zoomStatus < 1 && this.status) {
+        scrollingJumps(event, this.startX, this.startY, this.timeStart);
+      }
     } else {
       this.scaling = true;
       document.removeEventListener('touchmove', touchMoveListener, true);
       this.status = false;
-      lastScrollX = NaN;
-      lastScrollY = NaN;
     }
+    this.zoomStatus--;
   },
 
   scrolling: function(event) {
     event.stopPropagation();
-    var nowPoint = event.changedTouches[0];
-    var moveX = nowPoint.pageX - this.startX;
-    var moveY = nowPoint.pageY - this.startY;
-    //scrolling now
-    if(isNaN(lastScrollX) && isNaN(lastScrollY)) {
-      changeScroll(moveX, moveY, this.startX, this.startY); //functions.js
-    } else {
-      changeScroll(moveX, moveY, lastScrollX, lastScrollY); //functions.js
-    }
-    //set next coordinates
-    lastScrollX = moveX;
-    lastScrollY = moveY;
-  },
-
-  zoom: function() {
-    //change the scale
-    if(1 < this.curr_scale) {
-      if(scale > 1 && scale < 2) {
-        scale += 0.05;
-      } else if(scale > 2) {
-        scale += 0.08;
-      } else {
-        scale += 0.02;
+    var nowPointX  = event.changedTouches[0].pageX;
+    var nowPointY  = event.changedTouches[0].pageY;
+    var timeEnd  = new Date();
+    if((timeEnd.getTime() - this.timeStart.getTime()) > 200) {
+      if(this.zoomStatus < 1) {
+        changeScroll(nowPointX, nowPointY, this.startX, this.startY);
+        this.startX = nowPointX;
+        this.startY = nowPointY;
       }
-    } else {
-      if(scale > 1 && scale < 2) {
-        scale -= 0.05;
-      } else if(scale > 2) {
-        scale -= 0.08;
-      } else {
-        scale -= 0.02;
-      }
-    }
-    //set limits
-    if(scale < this.min_zoom) { scale = this.min_zoom }
-    if(scale > this.max_zoom) { scale = this.max_zoom }
-    //change the scrool step
-    if(scale < 1) {
-      scrollStep = 30;
-    } else if(scale < 2 && scale > 1) {
-      scrollStep = 20;
-    } else if(scale > 2 && scale < 2.5) {
-      scrollStep = 10;
-    } else {
-      scrollStep = 5;
     }
   },
 
@@ -145,6 +118,31 @@ var Touch = {
         return;
       }
     }
+  },
+
+  bagAndTool: function(x, y) {
+    if(bag) {
+      if(x > bagX && y > bagY && x < (bagX + bagSizeX) && y < (bagY + bagSizeY)) {
+        Click.bag(x, y);
+        this.status = false;
+      }
+    //Если нажимаем на инструмент или стрелки
+    } else {
+      if(x > GAME_MENU_TOOL_X && y > GAME_MENU_TOOL_Y && x < (GAME_MENU_TOOL_X + GAME_MENU_TOOL_SIZE_X) && y < (GAME_MENU_TOOL_Y + GAME_MENU_TOOL_SIZE_Y)) {
+        //будем делать drag and drop
+        this.status = false;
+      } else if((x > GAME_MENU_ARROW_LEFT_X && x < (GAME_MENU_ARROW_LEFT_X + GAME_MENU_ARROW_SIZE_X) ) && (y > GAME_MENU_ARROW_LEFT_Y && y < (GAME_MENU_ARROW_LEFT_Y + GAME_MENU_ARROW_SIZE_Y)) )  {
+        GameMenu.changeTool("left");
+        this.status = false;
+      } else if((x > GAME_MENU_ARROW_RIGHT_X && x < (GAME_MENU_ARROW_RIGHT_X + GAME_MENU_ARROW_SIZE_X) ) && (y > GAME_MENU_ARROW_RIGHT_Y && y < (GAME_MENU_ARROW_RIGHT_Y + GAME_MENU_ARROW_SIZE_Y)) )  {
+        GameMenu.changeTool("right");
+        this.status = false;
+      }
+    }
+  },
+
+  touchInBag: function(x, y) {
+    //будем делать drag and drop
   }
 
 }

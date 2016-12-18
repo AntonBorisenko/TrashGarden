@@ -22,10 +22,10 @@ var MainMenu = {
       }
     }
     //Create main menu
-    createMenuItem(DownloadApp.imagesMainMenu[0], MAIN_MENU_ITEM_X, MAIN_MENU_ON_GARDEN_BED_Y, "on trash garden");
-    createMenuItem(DownloadApp.imagesMainMenu[1], MAIN_MENU_HELP_X, MAIN_MENU_HELP_Y, "help");
-    createMenuItem(DownloadApp.imagesMainMenu[2], MAIN_MENU_NEW_GAME_X, MAIN_MENU_NEW_GAME_Y, "new game");
-    createMenuItem(DownloadApp.imagesMainMenu[3], MAIN_MENU_EXIT_X, MAIN_MENU_EXIT_Y, "exit");
+    createMenuItem(imagesMainMenu[0], MAIN_MENU_ITEM_X, MAIN_MENU_ON_GARDEN_BED_Y, "on trash garden");
+    createMenuItem(imagesMainMenu[1], MAIN_MENU_HELP_X, MAIN_MENU_HELP_Y, "help");
+    createMenuItem(imagesMainMenu[2], MAIN_MENU_NEW_GAME_X, MAIN_MENU_NEW_GAME_Y, "new game");
+    createMenuItem(imagesMainMenu[3], MAIN_MENU_EXIT_X, MAIN_MENU_EXIT_Y, "exit");
   },
 
   //Prototype main menu items

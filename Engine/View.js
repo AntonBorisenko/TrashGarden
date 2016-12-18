@@ -36,7 +36,7 @@ var View = {
   drawMainMenu: function () {
     var menu = MainMenu.arrayMenu;
     //Draw fone
-    ctx.drawImage(DownloadApp.imagesMainMenu[4], MAIN_MENU_FON_X, MAIN_MENU_FON_Y, canvas.width, canvas.height);
+    ctx.drawImage(imagesMainMenu[4], MAIN_MENU_FON_X, MAIN_MENU_FON_Y, canvas.width, canvas.height);
     for(var i = 0; i < menu.length; i++) {
       ctx.drawImage(menu[i].img, menu[i].x, menu[i].y, menu[i].sizeX, menu[i].sizeY);
     }
@@ -44,37 +44,20 @@ var View = {
   },
 
   drawMap: function() {
-    ////fone
-    // var pattern = ctx.createPattern(DownloadApp.imagesMap[1], "repeat");
-    // ctx.fillStyle = pattern;
-    // ctx.rect(0 + scrollX, 0 + scrollY, canvas.width, canvas.height);
-    // ctx.fill();
-    // ctx.fillStyle = "lightgreen";
-    // ctx.fillRect(0, 0, canvas.width, canvas.height);
     //fone
-    ctx.drawImage(DownloadApp.imagesMap[1], (0+scrollX)*scale, (0+scrollY)*scale, 1000*scale, 1000*scale);
-    ctx.drawImage(DownloadApp.imagesMap[1], (1000+scrollX)*scale, (0+scrollY)*scale, 1000*scale, 1000*scale);
-    ctx.drawImage(DownloadApp.imagesMap[1], (2000+scrollX)*scale, (0+scrollY)*scale, 1000*scale, 1000*scale);
-    ctx.drawImage(DownloadApp.imagesMap[1], (0+scrollX)*scale, (1000+scrollY)*scale, 1000*scale, 1000*scale);
-    ctx.drawImage(DownloadApp.imagesMap[1], (1000+scrollX)*scale, (1000+scrollY)*scale, 1000*scale, 1000*scale);
-    ctx.drawImage(DownloadApp.imagesMap[1], (2000+scrollX)*scale, (1000+scrollY)*scale, 1000*scale, 1000*scale);
+    ctx.drawImage(imagesMap[1], (0+scrollX)*scale, (0+scrollY)*scale, 1000*scale, 1000*scale);
+    ctx.drawImage(imagesMap[1], (1000+scrollX)*scale, (0+scrollY)*scale, 1000*scale, 1000*scale);
+    ctx.drawImage(imagesMap[1], (2000+scrollX)*scale, (0+scrollY)*scale, 1000*scale, 1000*scale);
+    ctx.drawImage(imagesMap[1], (0+scrollX)*scale, (1000+scrollY)*scale, 1000*scale, 1000*scale);
+    ctx.drawImage(imagesMap[1], (1000+scrollX)*scale, (1000+scrollY)*scale, 1000*scale, 1000*scale);
+    ctx.drawImage(imagesMap[1], (2000+scrollX)*scale, (1000+scrollY)*scale, 1000*scale, 1000*scale);
     //house
-    ctx.drawImage(DownloadApp.imagesMap[2], (1900+scrollX)*scale, (10+scrollY)*scale, 850*scale, 600*scale);
-    //testing first garden bed
-    var bed_0 = Map.arrayGardenBeds[0];
-    ctx.drawImage(DownloadApp.imagesMap[3], (bed_0.x+scrollX)*scale, (bed_0.y+scrollY)*scale, bed_0.sizeX*scale, bed_0.sizeY*scale);
-    //first line
-    var places_0 = bed_0.places;
-    for(var i = 0; i < places_0.length; i++) {
-      ctx.drawImage(DownloadApp.imagesMap[4], (places_0[i].x+scrollX)*scale, (places_0[i].y+scrollY)*scale, plantSizeX*scale, plantSizeY*scale);
-    }
-    //testing second garden bed
-    var bed_1 = Map.arrayGardenBeds[1];
-    ctx.drawImage(DownloadApp.imagesMap[3], (bed_1.x+scrollX)*scale, (bed_1.y+scrollY)*scale, bed_1.sizeX*scale, bed_1.sizeY*scale);
-    //first line
-    var places_1 = bed_1.places;
-    for(var i = 0; i < places_1.length; i++) {
-      ctx.drawImage(DownloadApp.imagesMap[5], (places_1[i].x+scrollX)*scale, (places_1[i].y+scrollY)*scale, plantSizeX*scale, plantSizeY*scale);
+    ctx.drawImage(imagesMap[2], (1900+scrollX)*scale, (10+scrollY)*scale, 850*scale, 600*scale);
+    //draw garden beds
+    var beds = Map.arrayGardenBeds;
+    for(var i = 0; i < beds.length; i++) {
+      ctx.drawImage(imagesMap[3], (beds[i].x+scrollX)*scale, (beds[i].y+scrollY)*scale, beds[i].sizeX*scale, beds[i].sizeY*scale);
+      beds[i].drawPlaces(); // draw Plants
     }
   },
 
@@ -83,15 +66,37 @@ var View = {
     for(var i = 0; i < menu.length; i++) {
       ctx.drawImage(menu[i].img, menu[i].x, menu[i].y, menu[i].sizeX, menu[i].sizeY);
     }
+    if(bag) {
+      View.drawBag();
+    } else {
+      View.drawTool();
+    }
   },
 
   drawShop: function() {
-    ctx.drawImage(DownloadApp.imagesShop[5], Shop.x, Shop.y, Shop.sizeX, Shop.sizeY);
+    ctx.drawImage(imagesShop[5], Shop.x, Shop.y, Shop.sizeX, Shop.sizeY);
   },
 
   drawStock: function() {
     ctx.fillStyle = "lightgreen";
     ctx.fillRect(Stock.x, Stock.y, Stock.sizeX, Stock.sizeY);
+  },
+
+  drawBag: function() {
+    //fone
+    ctx.drawImage(imagesGameMenu[9], bagX, bagY, bagSizeX, bagSizeY);
+    //seeds
+    ctx.drawImage(Bag.seeds[0].img, BAG_SEED_POSITION_1_X, BAG_SEED_POSITION_1_Y, BAG_SEED_POSITION_SIZE_X, BAG_SEED_POSITION_SIZE_Y);
+    ctx.drawImage(Bag.seeds[1].img, BAG_SEED_POSITION_2_X, BAG_SEED_POSITION_2_Y, BAG_SEED_POSITION_SIZE_X, BAG_SEED_POSITION_SIZE_Y);
+    ctx.drawImage(Bag.seeds[2].img, BAG_SEED_POSITION_3_X, BAG_SEED_POSITION_3_Y, BAG_SEED_POSITION_SIZE_X, BAG_SEED_POSITION_SIZE_Y);
+  },
+
+  drawTool: function() {
+    //arrows
+    ctx.drawImage(imagesGameMenu[4], GAME_MENU_ARROW_LEFT_X, GAME_MENU_ARROW_LEFT_Y, GAME_MENU_ARROW_SIZE_X, GAME_MENU_ARROW_SIZE_Y);
+    ctx.drawImage(imagesGameMenu[5], GAME_MENU_ARROW_RIGHT_X, GAME_MENU_ARROW_RIGHT_Y, GAME_MENU_ARROW_SIZE_X, GAME_MENU_ARROW_SIZE_Y);
+    //tool
+    ctx.drawImage(GameMenu.tools[tool].img, GAME_MENU_TOOL_X, GAME_MENU_TOOL_Y, GAME_MENU_TOOL_SIZE_X, GAME_MENU_TOOL_SIZE_Y);
   }
 
 }

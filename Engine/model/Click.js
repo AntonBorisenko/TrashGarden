@@ -32,4 +32,8 @@ var Click = {
     Touch.touchInGame(x, y);
   },
 
+  bag: function(x, y) {
+    Touch.touchInBag(x, y);
+  }
+
 }

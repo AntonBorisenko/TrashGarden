@@ -25,15 +25,22 @@ var GameMenu = {
       }
     }
     //tools
-    createTools(DownloadApp.imagesGameMenu[6], "Bailer");//bailer
-    createTools(DownloadApp.imagesGameMenu[7], "Shovel");//shovel
-    createTools(DownloadApp.imagesGameMenu[8], "Sprayer");//sprayer
+    createTools(imagesGameMenu[6], "Bailer");//bailer
+    createTools(imagesGameMenu[7], "Shovel");//shovel
+    createTools(imagesGameMenu[8], "Sprayer");//sprayer
     //icons
-    createMenu(DownloadApp.imagesGameMenu[3], GAME_MENU_ICON_SHOP_X, GAME_MENU_ICON_SHOP_Y, GAME_MENU_ICON_SIZE_X, GAME_MENU_ICON_SIZE_Y, "Shop");
-    createMenu(DownloadApp.imagesGameMenu[0], GAME_MENU_ICON_MENU_X, GAME_MENU_ICON_MENU_Y, GAME_MENU_ICON_SIZE_X, GAME_MENU_ICON_SIZE_Y, "Exit");
-    createMenu(DownloadApp.imagesGameMenu[1], GAME_MENU_ICON_BAG_X, GAME_MENU_ICON_BAG_Y, GAME_MENU_ICON_SIZE_X, GAME_MENU_ICON_SIZE_Y, "Bag");
-    createMenu(DownloadApp.imagesGameMenu[2], GAME_MENU_ICON_STOCK_X, GAME_MENU_ICON_STOCK_Y, GAME_MENU_ICON_SIZE_X, GAME_MENU_ICON_SIZE_Y, "Stock");
+    createMenu(imagesGameMenu[3], GAME_MENU_ICON_SHOP_X, GAME_MENU_ICON_SHOP_Y, GAME_MENU_ICON_SIZE_X, GAME_MENU_ICON_SIZE_Y, "Shop");
+    createMenu(imagesGameMenu[0], GAME_MENU_ICON_MENU_X, GAME_MENU_ICON_MENU_Y, GAME_MENU_ICON_SIZE_X, GAME_MENU_ICON_SIZE_Y, "Exit");
+    createMenu(imagesGameMenu[1], GAME_MENU_ICON_BAG_X, GAME_MENU_ICON_BAG_Y, GAME_MENU_ICON_SIZE_X, GAME_MENU_ICON_SIZE_Y, "Bag");
+    createMenu(imagesGameMenu[2], GAME_MENU_ICON_STOCK_X, GAME_MENU_ICON_STOCK_Y, GAME_MENU_ICON_SIZE_X, GAME_MENU_ICON_SIZE_Y, "Stock");
 
+  },
+
+  createBag: function() {
+    //constructor in functions.js
+    Bag.seeds.push(new CreateSeed(imagesBag[0], 0, 6)); //potatoes
+    Bag.seeds.push(new CreateSeed(imagesBag[1], 1, 6)); //tomato
+    Bag.seeds.push(new CreateSeed(imagesBag[2], 2, 4)); //cabbage
   },
 
   touchOnTheIcon: function(item) {
@@ -51,6 +58,20 @@ var GameMenu = {
         Shop.touchOnTheIcon();
         break;
      }
+  },
+
+  changeTool: function(next) {
+    if(next == "left") {
+      tool--;
+      if(tool < 0) {
+        tool = GameMenu.tools.length - 1;
+      }
+    } else if(next == "right") {
+      tool++;
+      if(tool > (GameMenu.tools.length - 1)) {
+        tool = 0;
+      }
+    }
   }
 
 }
@@ -75,8 +96,8 @@ var Shop = {
   },
 
   initProportions: function() {
-    Shop.sizeX = SCREEN_WIDTH;
-    Shop.sizeY = SCREEN_HEIGHT;
+    Shop.sizeX = WINDOW_WIDTH;
+    Shop.sizeY = WINDOW_HEIGHT;
   }
 
 }
@@ -101,28 +122,16 @@ var Exit = {
 //bag
 var Bag = {
 
-  //coordinates in bag
-  x:0,
-  y:0,
-  sizeX:0,
-  sizeY:0,
+  seeds: [],
 
   touchOnTheIcon: function() {
-    alert("Bag!");
-    // if(!Bag.x||!Bag.y||!Bag.sizeX||Bag.sizeY) {
-    //   Bag.initProportions();
-    // }
-    // window.bag = true;
-    // window.locationNow = "bag";
-  },
-
-  // initProportions: function() {
-  //   //in bag
-  //   Bag.x = bagX;
-  //   Bag.y = bagY;
-  //   Bag.sizeX = bagSizeX;
-  //   Bag.sizeY = bagSizeY;
-  // }
+    if(!bag) {
+      window.bag = true;
+    } else {
+      window.bag = false;
+    }
+    //window.locationNow = "bag";
+  }
 
 }
 
@@ -144,8 +153,8 @@ var Stock = {
   },
 
   initProportions: function() {
-    Stock.sizeX = SCREEN_WIDTH;
-    Stock.sizeY = SCREEN_HEIGHT;
+    Stock.sizeX = WINDOW_WIDTH;
+    Stock.sizeY = WINDOW_HEIGHT;
   }
 
 }
