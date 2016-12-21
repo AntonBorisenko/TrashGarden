@@ -114,38 +114,47 @@ var Model = {
     var x, y, el, canvasX, canvasY;
     //ТУТ НУЖНО ВСЁ ХОРОШЕНЬКО ОБДУМАТЬ И ГРАМОТНО НАПИСАТЬ, А ТО УЖЕ ЖЕСТЬ
     canvas.addEventListener('mousedown', function(event) {
+      //СКОРЕЕ ВСЕГО ЭТО ТОЖЕ НЕ НУЖНО, Т.К. ПОЗИЦИЯ ХОЛСТА - 0,0
       el = document.getElementById('canvas');
       canvasX = findPosX(el); //functions.js
       canvasY = findPosY(el); //functions.js
       //We get the coordinates of the click in the canvas
       x = event.pageX - canvasX;
       y = event.pageY - canvasY;
+      status = true;
       if(bag) {
         if(x > bagX && y > bagY && x < (bagX + bagSizeX) && y < (bagY + bagSizeY)) {
           Click.bag(x, y);
-          return;
+          status = false;
         }
         //Если нажимаем на инструмент или стрелки
         } else {
           if(x > GAME_MENU_TOOL_X && y > GAME_MENU_TOOL_Y && x < (GAME_MENU_TOOL_X + GAME_MENU_TOOL_SIZE_X) && y < (GAME_MENU_TOOL_Y + GAME_MENU_TOOL_SIZE_Y)) {
             //будем делать drag and drop
-            return;
+            Model.dragAndDropTool(tool);
+            status = false;
           } else if((x > GAME_MENU_ARROW_LEFT_X && x < (GAME_MENU_ARROW_LEFT_X + GAME_MENU_ARROW_SIZE_X) ) && (y > GAME_MENU_ARROW_LEFT_Y && y < (GAME_MENU_ARROW_LEFT_Y + GAME_MENU_ARROW_SIZE_Y)) )  {
             GameMenu.changeTool("left");
-            return;
+            status = false;
           } else if((x > GAME_MENU_ARROW_RIGHT_X && x < (GAME_MENU_ARROW_RIGHT_X + GAME_MENU_ARROW_SIZE_X) ) && (y > GAME_MENU_ARROW_RIGHT_Y && y < (GAME_MENU_ARROW_RIGHT_Y + GAME_MENU_ARROW_SIZE_Y)) )  {
             GameMenu.changeTool("right");
-            return;
+            status = false;
           }
         }
-      status = true;
     }, false);
 
     var handleMove = canvas.addEventListener('mousemove', function(event) {
+      //We get the coordinates mouse in the canvas(click)
+      var moveX = event.pageX - canvasX;
+      var moveY = event.pageY - canvasY;
+      //for drag and drop
+      lastMoveForToolX = moveX - (GAME_MENU_TOOL_SIZE_X / 2);
+      lastMoveForToolY = moveY - (GAME_MENU_TOOL_SIZE_Y / 2);
+      lastMoveForSeedX = moveX - (BAG_SEED_POSITION_SIZE_X / 2);
+      lastMoveForSeedY = moveY - (BAG_SEED_POSITION_SIZE_Y / 2);
+      if(planting && bagPlantingSeed !== false) { Touch.planting(moveX, moveY);}
+      if(bailer) { Touch.watering(moveX, moveY);}
       if(status) {
-        //We get the coordinates mouse in the canvas(click)
-        var moveX = event.pageX - canvasX;
-        var moveY = event.pageY - canvasY;
         //scrolling now
         if(isNaN(lastScrollX) && isNaN(lastScrollY)) {
           changeScroll(moveX, moveY, x, y); //functions.js
@@ -159,6 +168,7 @@ var Model = {
     }, false);
 
     canvas.addEventListener('mouseup', function(event) {
+      Model.canselToolAndSeed();
       document.removeEventListener('mousemove', handleMove, true);
       status = false;
       lastScrollX = NaN;
@@ -173,6 +183,49 @@ var Model = {
 
   touchInGameMenu: function(icon) {
     GameMenu.touchOnTheIcon(icon);
+  },
+
+  dragAndDropTool: function(item) {
+    switch(item) {
+      case 0:
+        bailer = true;
+      break;
+      case 1:
+        shovel = true;
+      break
+      case 2:
+        sprayer = true;
+      break;
+    }
+  },
+
+  dragAndDropBag: function(seedId) {
+    bagPlantingSeed = seedId;
+    planting = true;
+  },
+
+  canselToolAndSeed: function() {
+    bailer = false;
+    sprayer = false;
+    shovel = false;
+    bagPlantingSeed = false;
+    planting = false;
+    lastMoveForToolX = false;
+    lastMoveForToolY = false;
+    lastMoveForSeedX = false;
+    lastMoveForSeedY = false;
+  },
+
+  planting: function(bed, place) {
+    if(Map.arrayGardenBeds[bed].places[place].plant === false) {
+      Map.arrayGardenBeds[bed].places[place].plant = new Bag.seeds[bagPlantingSeed].ObjPlant;
+    }
+  },
+
+  watering: function(bed, place) {
+    if(Map.arrayGardenBeds[bed].places[place].plant !== false) {
+      Map.arrayGardenBeds[bed].places[place].plant.watering();
+    }  
   }
 
 }

@@ -86,9 +86,14 @@ var View = {
     //fone
     ctx.drawImage(imagesGameMenu[9], bagX, bagY, bagSizeX, bagSizeY);
     //seeds
-    ctx.drawImage(Bag.seeds[0].img, BAG_SEED_POSITION_1_X, BAG_SEED_POSITION_1_Y, BAG_SEED_POSITION_SIZE_X, BAG_SEED_POSITION_SIZE_Y);
-    ctx.drawImage(Bag.seeds[1].img, BAG_SEED_POSITION_2_X, BAG_SEED_POSITION_2_Y, BAG_SEED_POSITION_SIZE_X, BAG_SEED_POSITION_SIZE_Y);
-    ctx.drawImage(Bag.seeds[2].img, BAG_SEED_POSITION_3_X, BAG_SEED_POSITION_3_Y, BAG_SEED_POSITION_SIZE_X, BAG_SEED_POSITION_SIZE_Y);
+    var seeds = Bag.seeds;
+    for(var i = 0; i < seeds.length; i++) {
+      if(i === bagPlantingSeed && lastMoveForSeedX !== false && lastMoveForSeedY !== false) {
+        ctx.drawImage(seeds[i].img, lastMoveForSeedX, lastMoveForSeedY, seeds[i].sizeX, seeds[i].sizeY);
+      } else {
+        ctx.drawImage(seeds[i].img, seeds[i].x, seeds[i].y, seeds[i].sizeX, seeds[i].sizeY);
+      }
+    }
   },
 
   drawTool: function() {
@@ -96,7 +101,12 @@ var View = {
     ctx.drawImage(imagesGameMenu[4], GAME_MENU_ARROW_LEFT_X, GAME_MENU_ARROW_LEFT_Y, GAME_MENU_ARROW_SIZE_X, GAME_MENU_ARROW_SIZE_Y);
     ctx.drawImage(imagesGameMenu[5], GAME_MENU_ARROW_RIGHT_X, GAME_MENU_ARROW_RIGHT_Y, GAME_MENU_ARROW_SIZE_X, GAME_MENU_ARROW_SIZE_Y);
     //tool
-    ctx.drawImage(GameMenu.tools[tool].img, GAME_MENU_TOOL_X, GAME_MENU_TOOL_Y, GAME_MENU_TOOL_SIZE_X, GAME_MENU_TOOL_SIZE_Y);
+    if((bailer || shovel || sprayer) && (lastMoveForToolX !== false && lastMoveForToolY !== false)) {
+      ctx.drawImage(GameMenu.tools[tool].img, lastMoveForToolX, lastMoveForToolY, GAME_MENU_TOOL_SIZE_X, GAME_MENU_TOOL_SIZE_Y);
+    } else {
+      ctx.drawImage(GameMenu.tools[tool].img, GAME_MENU_TOOL_X, GAME_MENU_TOOL_Y, GAME_MENU_TOOL_SIZE_X, GAME_MENU_TOOL_SIZE_Y);
+    }
+
   }
 
 }

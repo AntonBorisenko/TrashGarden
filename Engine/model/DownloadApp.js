@@ -59,7 +59,7 @@ var imgMainMenuForDownload = ["img/Main menu/on_garden_bed.png","img/Main menu/h
 
 var imagesForMap = ["img/Map/fone.jpg", "img/Map/grassTexture.jpg", "img/Map/house.png", "img/Map/gardenBedTest.jpg",
                     "img/Map/tomato.png", "img/Map/cabbage.png", "img/Map/emptyPlace.jpg", "img/Map/small.png",
-                    "img/Map/middle.png", "img/Map/green.png", "img/Map/Patrick_Star.svg" ];
+                    "img/Map/middle.png", "img/Map/green.png", "img/Map/Patrick_Star.svg", "img/Map/water.png" ];
 
 var imgGameMenuForDownload = ["img/Game menu/exit_in_menu.png", "img/Game menu/bag.png", "img/Game menu/stock.png",
                               "img/Game menu/shop.png", "img/Game menu/arrow_left.png", "img/Game menu/arrow_right.png",

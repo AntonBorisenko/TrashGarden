@@ -38,9 +38,9 @@ var GameMenu = {
 
   createBag: function() {
     //constructor in functions.js
-    Bag.seeds.push(new CreateSeed(imagesBag[0], 0, 6)); //potatoes
-    Bag.seeds.push(new CreateSeed(imagesBag[1], 1, 6)); //tomato
-    Bag.seeds.push(new CreateSeed(imagesBag[2], 2, 4)); //cabbage
+    Bag.seeds.push(new CreateSeed(imagesBag[0], BAG_SEED_POSITION_1_X, BAG_SEED_POSITION_1_Y, BAG_SEED_POSITION_SIZE_X, BAG_SEED_POSITION_SIZE_Y, 0, 6, Potatoes)); //potatoes
+    Bag.seeds.push(new CreateSeed(imagesBag[1], BAG_SEED_POSITION_2_X, BAG_SEED_POSITION_2_Y, BAG_SEED_POSITION_SIZE_X, BAG_SEED_POSITION_SIZE_Y, 1, 6, Tomato)); //tomato
+    Bag.seeds.push(new CreateSeed(imagesBag[2], BAG_SEED_POSITION_3_X, BAG_SEED_POSITION_3_Y, BAG_SEED_POSITION_SIZE_X, BAG_SEED_POSITION_SIZE_Y, 2, 4, Cabbage)); //cabbage
   },
 
   touchOnTheIcon: function(item) {

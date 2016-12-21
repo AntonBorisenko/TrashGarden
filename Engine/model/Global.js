@@ -29,6 +29,8 @@ var Global = {
     window.SCREEN_HEIGHT = window.screen.height;
     window.WINDOW_WIDTH = document.documentElement.clientWidth;
     window.WINDOW_HEIGHT = document.documentElement.clientHeight;
+    window.CENTR_WIDTH = WINDOW_WIDTH / 2;
+    window.CENTR_HEIGHT = WINDOW_HEIGHT / 2;
   },
 
   defineScrolling: function(canvas) {
@@ -57,8 +59,18 @@ var Global = {
   defineStatusVariables: function() {
     window.locationNow = "download";                  //location
     window.initialization = false;
+    window.planting = false;
     window.bag = false;
+    window.bagPlantingSeed = false;
     window.tool = 0;
+    window.bailer = false;
+    window.sprayer = false;
+    window.shovel = false;
+    //for drag and drop
+    window.lastMoveForToolX = false;
+    window.lastMoveForToolY = false;
+    window.lastMoveForSeedX = false;
+    window.lastMoveForSeedY = false;
   },
 
   defineMainMenu: function() {
@@ -118,22 +130,24 @@ var Global = {
   defineBag: function() {
     //bag fone sizeY
     window.bagX = WINDOW_WIDTH / 5.68;
-    window.bagY =  WINDOW_HEIGHT / 7 * 5;
+    window.bagY =  WINDOW_HEIGHT / 7 * 5.4;
     window.bagSizeX = WINDOW_WIDTH / 3 * 1.95;
-    window.bagSizeY = WINDOW_HEIGHT / 3.2;
+    window.bagSizeY = WINDOW_HEIGHT / 4;
     //Seeds in bag(in map)
     var distance =  WINDOW_HEIGHT / 19;
-    window.BAG_SEED_POSITION_SIZE_X = WINDOW_HEIGHT / 8;
+    window.BAG_SEED_POSITION_SIZE_X = WINDOW_HEIGHT / 10.5;
     window.BAG_SEED_POSITION_SIZE_Y = BAG_SEED_POSITION_SIZE_X * 1.8;
     window.BAG_SEED_POSITION_1_X = (WINDOW_WIDTH / 2) - (BAG_SEED_POSITION_SIZE_X * 1.5) - distance;
     window.BAG_SEED_POSITION_2_X = BAG_SEED_POSITION_1_X + BAG_SEED_POSITION_SIZE_X + distance;
     window.BAG_SEED_POSITION_3_X = BAG_SEED_POSITION_2_X + BAG_SEED_POSITION_SIZE_X + distance;
-    window.BAG_SEED_POSITION_1_Y = window.BAG_SEED_POSITION_2_Y = window.BAG_SEED_POSITION_3_Y = WINDOW_HEIGHT / 7 * 5.3;
+    window.BAG_SEED_POSITION_1_Y = window.BAG_SEED_POSITION_2_Y = window.BAG_SEED_POSITION_3_Y = WINDOW_HEIGHT / 7 * 5.68;
   },
 
   definePlants: function() {
     window.plantSizeX = 100;
-    window.plantSizeY = 100;
+    window.plantSizeY = 150;
+    window.DROP_WATER_SIZE_X = plantSizeX / 4;
+    window.DROP_WATER_SIZE_Y = DROP_WATER_SIZE_X;
   }
 
 }

@@ -51,40 +51,48 @@ function CreateObject(x, y, sizeX, sizeY, img, objName) {
   this.objName = objName;
 }
 
-function CreateSeed(img, id, count) {
+function CreateSeed(img, x, y, sizeX, sizeY, id, count, ObjPlant) {
   this.img = img;
+  this.x = x;
+  this.y = y;
+  this.sizeX = sizeX;
+  this.sizeY = sizeY;
   this.id = id;
   this.count = count;
+  this.ObjPlant = ObjPlant;
 }
 
 //Functions for zoom and scrolling
 
-function distance (p1, p2) {
-  return (Math.sqrt(Math.pow((p1.clientX - p2.clientX), 2) + Math.pow((p1.clientY - p2.clientY), 2)));
+function distance (f1, f2) {
+  return (Math.sqrt(Math.pow((f1.clientX - f2.clientX), 2) + Math.pow((f1.clientY - f2.clientY), 2)));
 }
 
-function zoom() {
+function getCentrZoomX(f1, f2) {
+  return (Math.abs(f1.clientX - f2.clientX) / 2 + f1.clientX);
+}
+
+
+function centering(centrZoomX) {
+
+}
+
+function zoom(tt) {
+  var new_curr_scale = distance(tt[0], tt[1]) / Touch.dist; //functions.js
+  var centrZoomX = getCentrZoomX(tt[0], tt[1]);
   //change the scale
-  if(1 < Touch.curr_scale) {
-    if(scale >= 1 && scale < 2) {
-      scale += 0.05;
-    } else if(scale >= 2) {
-      scale += 0.08;
-    } else {
-      scale += 0.02;
-    }
-  } else {
-    if(scale >= 1 && scale < 2) {
-      scale -= 0.05;
-    } else if(scale >= 2) {
-      scale -= 0.08;
-    } else {
-      scale -= 0.02;
-    }
+  if(new_curr_scale > Touch.curr_scale) {
+    scale *= 1.03;
+    centering(centrZoomX);
+  } else if(new_curr_scale < Touch.curr_scale) {
+    scale /= 1.03;
+    centering(centrZoomX);
   }
   //set limits
   if(scale < Touch.min_zoom) { scale = Touch.min_zoom }
   if(scale > Touch.max_zoom) { scale = Touch.max_zoom }
+
+  Touch.curr_scale = new_curr_scale;
   setLimits();
 }
 
@@ -115,7 +123,7 @@ function scrollingJumps(event, startX, startY, timeStart) {
       differenceX *= 1.5;
       differenceY *= 1.5;
     }
-    //ПРОБУЕМ СДЕЛАТЬ ГЛАДКИЙ СКРОЛЛ
+
     var scrollCount = 20;
     var intervalPxX;
     var intervalPxY;
